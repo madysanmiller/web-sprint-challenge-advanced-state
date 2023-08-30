@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 
-const { getNextQuiz, postAnswer, postQuiz } = require('./helpers')
+const { getNextQuiz, postAnswer, submitQuiz } = require('./helpers')
 
 const server = express()
 server.use(express.json())
