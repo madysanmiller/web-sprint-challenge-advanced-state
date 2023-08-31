@@ -57,6 +57,8 @@ export function fetchQuiz() {
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
   
+
+
 export function postAnswer() {
   return function (dispatch, getState) {
     const selectedAnswer = getState().selectedAnswer;
@@ -74,34 +76,39 @@ export function postAnswer() {
     ) .finally(() => {
       dispatch(fetchQuiz())
     })
+
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz() {
-  return function (dispatch,getState) {
-    const newQuiz=getState().form;
 
-    const postNewQuiz = { "question_text": newQuiz.newQuestion, 
-                       "true_answer_text": newQuiz.newTrueAnswer,
-                        "false_answer_text": newQuiz.newFalseAnswer }
-    //console.log(postNewQuiz)
-    axios.post('http://localhost:9000/api/quiz/new',postNewQuiz)
-         .then(res=>{
-          console.log(res)
-           const backMessage =`Congrats: "${res.data.question}" is a great question!`
-           dispatch(setMessage(backMessage))
-           dispatch(resetForm())
-         })
-        .catch(err => {
-          const information = `Error ${err.response.status}:${err.response.data.message}`
-          console.log(information)
-        })
-    // On successful POST:
-    // - Dispatch the correct message to the the appropriate state
-    // - Dispatch the resetting of the form
-  };
-}
+//     // On successful POST:
+//     // - Dispatch the correct message to the the appropriate state
+//     // - Dispatch the resetting of the form
+
+
+export function postQuiz(form) {
+  return function (dispatch) {
+    const quizData = {
+      question_text : form.question_text,
+      true_answer_text: form.true_answer_text,
+      false_answer_text: form.false_answer_text,
+    };
+    console.log('quizData', quizData);
+    axios.post('http://localhost:9000/api/quiz/new', quizData)
+      .then(response => {
+        // console.log('response', response.data)
+        dispatch(setQuiz(null));
+        dispatch(setMessage(`Congrats: "${response.data.question}" is a great question!`));
+        dispatch(resetForm());
+      })
+      .catch(error => {
+        const errToDisplay = err.response ? err.response.data.message : err.message
+        dispatch(setMessage(errToDisplay))
+      });
+    }
+  }
+
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state

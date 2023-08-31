@@ -43,3 +43,4 @@ const mapDispatchProps = (dispatch) => {
 };
 
 export default connect(mapStateProps, mapDispatchProps)(Wheel);
+

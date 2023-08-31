@@ -9,7 +9,7 @@ import Message from './Message'
 import Form from './Form'
 
 // REDUX IMPORTS
-import { createStore, applyMiddleware, compose } from 'redux'
+import { legacy_createStore as createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import reducer from '../state/reducer'

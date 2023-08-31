@@ -66,3 +66,4 @@ function form(state = initialFormState, action) {
 }
 
 export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
+
