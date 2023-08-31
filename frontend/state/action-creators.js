@@ -105,8 +105,8 @@ export function postQuiz(form) {
         dispatch(resetForm());
       })
       .catch(error => {
-        const errToDisplay = err.response ? err.response.data.message : err.message
-        dispatch(setMessage(errToDisplay))
+        const errorToDisplay = error.response ? error.response.data.message : error.message
+        dispatch(setMessage(errorToDisplay))
       });
     }
   }
